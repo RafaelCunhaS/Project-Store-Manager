@@ -126,7 +126,7 @@ Ao iniciar este projeto, você concorda com as diretrizes do Código de Conduta 
 
   1. Clone o repositório
 
-  - `git clone git@github.com:betrybe/sd-017-store-manager.git`;
+  - `git clone git@github.com:tryber/sd-017-store-manager.git`;
 
   - Entre na pasta do repositório que você acabou de clonar:
     - `cd sd-017-store-manager`
