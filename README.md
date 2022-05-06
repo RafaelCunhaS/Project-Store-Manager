@@ -36,7 +36,7 @@ Ao iniciar este projeto, você concorda com as diretrizes do Código de Conduta 
   <summary><strong>🗓 Data de Entrega</strong></summary><br />
 
   - Este projeto é individual
-  - Serão `5` dias de projeto
+  - Serão `6` dias de projeto
   - Data de entrega para avaliação final do projeto: `20/05/2022 14:00`
 
     <br />
