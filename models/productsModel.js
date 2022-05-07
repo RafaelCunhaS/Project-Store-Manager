@@ -18,9 +18,20 @@ const getByName = async (name) => {
 const create = async (name, quantity) => {
   const [{ insertId }] = await connection
     .execute('INSERT INTO products (name, quantity) VALUES (?, ?)', [name, quantity]);
-    
+
   return ({
     id: insertId,
+    name,
+    quantity,
+  });
+};
+
+const update = async (id, name, quantity) => {
+  await connection
+    .execute('UPDATE products SET name=?, quantity=? WHERE id=?', [name, quantity, id]);
+
+  return ({
+    id,
     name,
     quantity,
   });
@@ -31,4 +42,5 @@ module.exports = ({
   getById,
   create,
   getByName,
+  update,
 });
