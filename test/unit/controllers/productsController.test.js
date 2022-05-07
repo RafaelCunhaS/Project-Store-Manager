@@ -35,11 +35,11 @@ describe('Ao chamar a função getAll do Controller', () => {
 
     const response = {};
     const request = {};
-    const payload = [{
+    const payload = {
       id: 1,
       name: 'Armadura do Homem de Ferro',
       quantity: 5
-    }]
+    }
 
     before(() => {
       response.status = sinon.stub().returns(response);
@@ -55,12 +55,12 @@ describe('Ao chamar a função getAll do Controller', () => {
 
       expect(response.status.calledWith(200)).to.be.equal(true);
     });
-    it('é retornado o método "json" passando um array', async () => {
+    it('é retornado o método "json" passando um objeto', async () => {
       await ProductsController.getAll(request, response);
 
-      expect(response.json.calledWith(sinon.match.array)).to.be.equal(true);
+      expect(response.json.calledWith(sinon.match.object)).to.be.equal(true);
     });
-    it('o array possui objetos', async () => {
+    it('o objeto possui as propriedades e valores esperados', async () => {
       await ProductsController.getAll(request, response);
 
       expect(response.json.calledWith(sinon.match(payload))).to.be.equal(true);
