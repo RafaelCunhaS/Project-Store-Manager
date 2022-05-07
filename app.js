@@ -2,11 +2,12 @@ const express = require('express');
 const productsRouter = require('./routes/productsRouter');
 const salesRouter = require('./routes/salesRouter');
 const error = require('./middlewares/errorMiddleware');
+const { validateProduct } = require('./middlewares/productsValidation');
 
 const app = express();
 app.use(express.json());
 
-app.use('/products', productsRouter);
+app.use('/products', validateProduct, productsRouter);
 
 app.use('/sales', salesRouter);
 // não remova esse endpoint, é para o avaliador funcionar
