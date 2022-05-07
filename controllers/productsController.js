@@ -9,7 +9,7 @@ const getAll = async (_req, res) => {
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  const result = await ProductsService.getById(id);
+  const [result] = await ProductsService.getById(id);
 
   return res.status(OK_STATUS).json(result);
 };
