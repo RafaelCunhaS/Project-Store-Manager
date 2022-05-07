@@ -37,10 +37,13 @@ const update = async (id, name, quantity) => {
   });
 };
 
+const exclude = async (id) => connection.execute('DELETE FROM products WHERE id=?', [id]);
+
 module.exports = ({
   getAll,
   getById,
   create,
   getByName,
   update,
+  exclude,
 });
