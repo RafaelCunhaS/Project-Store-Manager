@@ -16,12 +16,13 @@ describe('Ao chamar a função getAll do model', () => {
       const result = await ProductsModel.getAll();
 
       expect(result).to.be.an('array');
-    })
+    });
+
     it('e seu conteúdo está vazio', async () => {
       const result = await ProductsModel.getAll();
 
       expect(result).to.be.empty;
-    })
+    });
   })
 
   describe('Se houver produtos no BD', () => {
@@ -41,20 +42,23 @@ describe('Ao chamar a função getAll do model', () => {
 
       expect(result).to.be.an('array');
     });
+
     it('o seu conteúdo não está vazio', async () => {
       const result = await ProductsModel.getAll();
 
       expect(result).to.not.be.empty;
     });
+
     it('o array possui objetos', async () => {
       const [result] = await ProductsModel.getAll();
 
       expect(result).to.be.an('object');
     });
+
     it('o conteúdo do objeto contém os atributos id, name, quantity', async () => {
       const [result] = await ProductsModel.getAll();
 
       expect(result).to.includes.all.keys('id', 'name', 'quantity');
-    })
+    });
   })
 })
