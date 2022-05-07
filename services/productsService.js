@@ -1,4 +1,5 @@
 const ProductsModel = require('../models/productsModel');
+const { CONFLICT } = require('../utils/statusCode');
 
 const getAll = async () => {
   const result = await ProductsModel.getAll();
@@ -14,7 +15,24 @@ const getById = async (id) => {
   return result;
 };
 
+const validateCreation = async (name) => {
+  const result = await ProductsModel.getByName(name);
+  if (result.length) {
+    const error = { status: CONFLICT, message: 'Product already exists' };
+    throw error;
+  }
+  return true;
+};
+
+const create = async (name, quantity) => {
+  await validateCreation(name);
+  const result = await ProductsModel.create(name, quantity);
+
+  return result;
+};
+
 module.exports = {
   getAll,
   getById,
+  create,
 };
