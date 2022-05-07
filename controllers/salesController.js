@@ -7,14 +7,14 @@ const getAll = async (_req, res) => {
   return res.status(OK_STATUS).json(result);
 };
 
-// const getById = async (req, res) => {
-//   const { id } = req.params;
-//   const result = await SalesService.getById(id);
+const getById = async (req, res) => {
+  const { id } = req.params;
+  const result = await SalesService.getById(id);
 
-//   return res.status(OK_STATUS).json(result);
-// };
+  return res.status(OK_STATUS).json(result);
+};
 
 module.exports = {
   getAll,
-  // getById,
+  getById,
 };
