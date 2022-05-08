@@ -20,8 +20,17 @@ const create = async (req, res) => {
   return res.status(CREATED).json(result);
 };
 
+const update = async (req, res) => {
+  const [{ productId, quantity }] = req.body;
+  const { id } = req.params;
+  const result = await SalesService.update(id, productId, quantity);
+
+  return res.status(OK_STATUS).json(result);
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };
