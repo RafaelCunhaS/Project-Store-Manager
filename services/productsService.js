@@ -16,20 +16,18 @@ const getById = async (id) => {
 };
 
 const checkName = async (name) => {
-  const result = await ProductsModel.getByName(name);
-
-  if (result.length) return true;
-
-  return false;
-};
-
-const create = async (name, quantity) => {
-  const alreadyExists = await checkName(name);
+  const alreadyExists = await ProductsModel.getByName(name);
 
   if (alreadyExists) {
     const error = { status: CONFLICT, message: 'Product already exists' };
     throw error;
   }
+
+  return true;
+};
+
+const create = async (name, quantity) => {
+  await checkName(name);
 
   const result = await ProductsModel.create(name, quantity);
   return result;
@@ -51,6 +49,7 @@ module.exports = {
   getAll,
   getById,
   create,
+  checkName,
   update,
   exclude,
 };
