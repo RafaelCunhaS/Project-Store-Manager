@@ -26,7 +26,27 @@ const getById = async (id) => {
   return data;
 };
 
+const create = async (array) => {
+  const date = new Date().toLocaleString('en-CA', { hour12: false });
+
+  const [{ insertId: id }] = await connection
+    .execute('INSERT INTO sales (date) VALUES (?)', [date]);
+  
+  const result = array.map(({ productId, quantity }) => connection.execute(
+      `INSERT INTO sales_products (sale_id, product_id, quantity)
+      VALUES (?, ?, ?)`, [id, productId, quantity],
+  ));
+
+  Promise.all(result);
+
+  return ({
+    id,
+    itemsSold: array,
+  });
+};
+
 module.exports = ({
   getAll,
   getById,
+  create,
 });
