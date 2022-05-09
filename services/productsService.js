@@ -8,14 +8,16 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const result = await ProductsModel.getById(id);
+
   if (!result.length) {
     const error = { status: NOT_FOUND, message: 'Product not found' };
     throw error;
   }
+
   return result;
 };
 
-const checkName = async (name) => {
+const create = async (name, quantity) => {
   const alreadyExists = await ProductsModel.getByName(name);
 
   if (alreadyExists.length) {
@@ -23,13 +25,8 @@ const checkName = async (name) => {
     throw error;
   }
 
-  return true;
-};
-
-const create = async (name, quantity) => {
-  await checkName(name);
-
   const result = await ProductsModel.create(name, quantity);
+
   return result;
 };
 
@@ -49,7 +46,6 @@ module.exports = {
   getAll,
   getById,
   create,
-  checkName,
   update,
   exclude,
 };

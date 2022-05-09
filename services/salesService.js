@@ -9,10 +9,12 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const result = await SalesModel.getById(id);
+
   if (!result.length) {
     const error = { status: 404, message: 'Sale not found' };
     throw error;
   }
+
   return result;
 };
 
@@ -33,6 +35,7 @@ const validateSale = async (array) => {
 
 const create = async (array) => {
   await validateSale(array);
+
   const result = await SalesModel.create(array);
   return result;
 };
@@ -55,4 +58,5 @@ module.exports = {
   create,
   update,
   exclude,
+  validateSale,
 };

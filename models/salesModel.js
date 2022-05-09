@@ -27,6 +27,15 @@ const getById = async (id) => {
   return data;
 };
 
+const createSalesProducts = async (id, array) => {
+  const result = array.map(({ productId, quantity }) => connection.execute(
+    `INSERT INTO sales_products (sale_id, product_id, quantity)
+    VALUES (?, ?, ?)`, [id, productId, quantity],
+  ));
+
+  await Promise.all(result);
+};
+
 const create = async (array) => {
   await ProductsModel.updateQuantity(array, true);
 
@@ -35,12 +44,7 @@ const create = async (array) => {
   const [{ insertId: id }] = await connection
     .execute('INSERT INTO sales (date) VALUES (?)', [date]);
   
-  const result = array.map(({ productId, quantity }) => connection.execute(
-      `INSERT INTO sales_products (sale_id, product_id, quantity)
-      VALUES (?, ?, ?)`, [id, productId, quantity],
-  ));
-
-  await Promise.all(result);
+  createSalesProducts(id, array);
 
   return ({
     id,
@@ -77,4 +81,5 @@ module.exports = ({
   create,
   update,
   exclude,
+  createSalesProducts,
 });
