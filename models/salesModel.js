@@ -1,4 +1,5 @@
 const connection = require('./connection');
+const ProductsModel = require('./productsModel');
 
 const getAll = async () => {
   const [data] = await connection
@@ -27,6 +28,8 @@ const getById = async (id) => {
 };
 
 const create = async (array) => {
+  await ProductsModel.updateQuantity(array, true);
+
   const date = new Date().toLocaleString('en-CA', { hour12: false });
 
   const [{ insertId: id }] = await connection
@@ -37,7 +40,7 @@ const create = async (array) => {
       VALUES (?, ?, ?)`, [id, productId, quantity],
   ));
 
-  Promise.all(result);
+  await Promise.all(result);
 
   return ({
     id,
@@ -61,7 +64,12 @@ const update = async (id, productId, quantity) => {
   });
 };
 
-const exclude = async (id) => connection.execute('DELETE FROM sales WHERE id=?', [id]);
+const exclude = async (id) => {
+  const array = await getById(id);
+  await ProductsModel.updateQuantity(array, false);
+  
+  await connection.execute('DELETE FROM sales WHERE id=?', [id]);
+};
 
 module.exports = ({
   getAll,

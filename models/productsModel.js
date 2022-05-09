@@ -37,6 +37,24 @@ const update = async (id, name, quantity) => {
   });
 };
 
+const updateQuantity = async (array, boolean) => {
+  const getQuantity = array.map(({ productId }) => getById(productId));
+
+  const previousQuantity = await Promise.all(getQuantity);
+
+  const newQuantity = previousQuantity.map((el) => el[0]);
+
+  array.forEach(({ quantity }, i) => { 
+    if (boolean) newQuantity[i].quantity -= quantity;
+    else newQuantity[i].quantity += quantity; 
+  });
+
+  const response = newQuantity
+    .map(({ id, name, quantity }) => update(id, name, quantity));
+  
+  await Promise.all(response);
+};
+
 const exclude = async (id) => connection.execute('DELETE FROM products WHERE id=?', [id]);
 
 module.exports = ({
@@ -46,4 +64,5 @@ module.exports = ({
   getByName,
   update,
   exclude,
+  updateQuantity,
 });
