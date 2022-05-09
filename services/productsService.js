@@ -18,7 +18,7 @@ const getById = async (id) => {
 const checkName = async (name) => {
   const alreadyExists = await ProductsModel.getByName(name);
 
-  if (alreadyExists) {
+  if (alreadyExists.length) {
     const error = { status: CONFLICT, message: 'Product already exists' };
     throw error;
   }
