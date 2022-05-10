@@ -33,7 +33,7 @@ const exclude = async (req, res) => {
   const { id } = req.params;
   await ProductsService.exclude(id);
 
-  return res.status(NO_CONTENT).end();
+  return res.status(NO_CONTENT).json();
 };
 
 module.exports = {

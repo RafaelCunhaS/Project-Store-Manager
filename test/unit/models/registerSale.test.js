@@ -12,21 +12,43 @@ describe('Insere uma nova venda no BD', () => {
   
     const array = [
       {
-        "productId": 1,
-        "quantity": 3
+        productId: 1,
+        quantity: 3
       }
-    ]
+    ];
+
+    const getByIdPayload = {
+      id: 1,
+      name: 'Armadura do Homem de Ferro',
+      quantity: 5
+    };
+
+    const updatePayload = {
+      id: 1,
+      name: 'Armadura do Homem de Ferro',
+      quantity: 2
+    };
+
+    const promisePayload = [[{
+      id: 1,
+      name: 'Armadura do Homem de Ferro',
+      quantity: 5
+    }]];
   
     before(async () => {
       sinon.stub(connection, 'execute').resolves(id);
       sinon.stub(SalesModel, 'createSalesProducts').resolves();
-      sinon.stub(ProductsModel, 'updateQuantity').resolves();
+      sinon.stub(ProductsModel, 'getById').resolves(getByIdPayload);
+      sinon.stub(ProductsModel, 'update').resolves(updatePayload);
+      sinon.stub(Promise, 'all').resolves(promisePayload);
     });
   
     after(async () => {
       connection.execute.restore();
       SalesModel.createSalesProducts.restore();
-      ProductsModel.updateQuantity.restore();
+      ProductsModel.getById.restore();
+      ProductsModel.update.restore();
+      Promise.all.restore();
     });
 
     it('retorna um objeto', async () => {
