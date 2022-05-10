@@ -1,6 +1,6 @@
 const SalesModel = require('../models/salesModel');
 const ProductsModel = require('../models/productsModel');
-const { UNPROCESSABLE_ENTITY } = require('../utils/statusCode');
+const { NOT_FOUND, UNPROCESSABLE_ENTITY } = require('../utils/statusCode');
 
 const getAll = async () => {
   const result = await SalesModel.getAll();
@@ -11,7 +11,7 @@ const getById = async (id) => {
   const result = await SalesModel.getById(id);
 
   if (!result.length) {
-    const error = { status: 404, message: 'Sale not found' };
+    const error = { status: NOT_FOUND, message: 'Sale not found' };
     throw error;
   }
 
