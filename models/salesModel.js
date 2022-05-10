@@ -38,11 +38,8 @@ const createSalesProducts = async (id, array) => {
 
 const create = async (array) => {
   await ProductsModel.updateQuantity(array, true);
-
-  const date = new Date().toLocaleString('en-CA', { hour12: false });
-
-  const [{ insertId: id }] = await connection
-    .execute('INSERT INTO sales (date) VALUES (?)', [date]);
+  
+  const [{ insertId: id }] = await connection.execute('INSERT INTO sales (date) VALUES (NOW())');
   
   createSalesProducts(id, array);
 

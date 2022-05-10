@@ -38,19 +38,15 @@ const update = async (id, name, quantity) => {
 };
 
 const updateQuantity = async (array, boolean) => {
-  const getQuantity = array.map(({ productId }) => getById(productId));
-
-  const previousQuantity = await Promise.all(getQuantity);
-
-  const newQuantity = previousQuantity.map((el) => el[0]);
-
-  array.forEach(({ quantity }, i) => { 
-    if (boolean) newQuantity[i].quantity -= quantity;
-    else newQuantity[i].quantity += quantity;
+  const response = array
+    .map(({ productId, quantity }) => {
+      if (boolean) {
+        return connection
+          .execute('UPDATE products SET quantity = quantity-? WHERE id=?', [quantity, productId]);
+      }
+    return connection
+      .execute('UPDATE products SET quantity = quantity+? WHERE id=?', [quantity, productId]);
   });
-
-  const response = newQuantity
-    .map(({ id, name, quantity }) => update(id, name, quantity));
   
   await Promise.all(response);
 };
