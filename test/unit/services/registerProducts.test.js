@@ -5,10 +5,9 @@ const ProductsService = require('../../../services/productsService');
 const { CONFLICT } = require('../../../utils/statusCode');
 
 describe('Insere um novo produto no BD', () => {
-
   describe('quando o nome do produto já existe no BD', () => {
 
-    const payload = [{ name: 'produto', quantity: 10 }];
+    const payload = [[{ name: 'produto', quantity: 10 }]];
 
     before(async () => {  
       sinon.stub(ProductsModel, 'getByName').returns(payload);
@@ -18,14 +17,13 @@ describe('Insere um novo produto no BD', () => {
 
     it('retorna um erro', async () => {
       try {
-        await ProductsService.create(payload);
+        await ProductsService.create('produto', 10);
       } catch (error) {
         expect(error).to.be.deep.equal({ status: CONFLICT, message: 'Product already exists' });
       }
     });
   });
 
-  
   describe('quando é inserido com sucesso', () => {
 
      const payloadProduct = {

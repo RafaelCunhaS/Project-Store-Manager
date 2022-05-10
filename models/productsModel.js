@@ -46,7 +46,7 @@ const updateQuantity = async (array, boolean) => {
 
   array.forEach(({ quantity }, i) => { 
     if (boolean) newQuantity[i].quantity -= quantity;
-    else newQuantity[i].quantity += quantity; 
+    else newQuantity[i].quantity += quantity;
   });
 
   const response = newQuantity

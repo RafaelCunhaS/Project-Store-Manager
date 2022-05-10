@@ -15,18 +15,12 @@ describe('Ao chamar a função getById do model', () => {
   
     after(() => ProductsModel.getById.restore());
 
-    it('retorna um array', async () => {
+    it('retorna um erro', async () => {
       try {
         await ProductsService.getById(id);
       } catch (error) {
         expect(error).to.be.deep.equal({ status: NOT_FOUND, message: 'Product not found' });
       }
-    });
-
-    it('e seu conteúdo está vazio', async () => {
-      const result = await ProductsModel.getById(id);
-
-      expect(result).to.be.empty;
     });
   })
 

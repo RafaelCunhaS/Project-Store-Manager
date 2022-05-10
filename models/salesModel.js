@@ -57,7 +57,7 @@ const update = async (id, productId, quantity) => {
     .execute('UPDATE sales_products SET quantity=? WHERE sale_id=? AND product_id=?',
     [quantity, id, productId]);
 
-  return ({
+  return {
     saleId: id,
     itemUpdated: [
       {
@@ -65,7 +65,7 @@ const update = async (id, productId, quantity) => {
         quantity,
       },
     ],
-  });
+  };
 };
 
 const exclude = async (id) => {

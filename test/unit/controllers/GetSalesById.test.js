@@ -23,7 +23,7 @@ describe('Ao chamar a função getById do Controller', () => {
     ];
     
     before(() => {
-      request.params = 1;
+      request.params = { id: 1 };
       response.status = sinon.stub().returns(response);
       response.json = sinon.stub().returns();
 
