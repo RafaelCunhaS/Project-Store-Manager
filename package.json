@@ -4,13 +4,11 @@
   "description": "Simple CRUD to sales and products",
   "main": "index.js",
   "scripts": {
-    "posttest": "node ./test/restoreDb.js",
-    "test": "jest --runInBand --testTimeout=60000",
-    "test:mocha": "nyc --all --include models --include services --include controllers mocha test/unit/**/*.js --exit",
+    "test": "nyc --all --include models --include services --include controllers mocha test/**/*.js --exit",
     "start": "node index.js",
     "debug": "nodemon --ignore coverage index.js",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js, .jsx",
-    "restore": "node ./test/restoreDb.js"
+    "restore": "node ./utils/restoreDb.js"
   },
   "repository": {
     "type": "git",
