@@ -72,16 +72,7 @@ describe('Insere uma nova venda no BD', () => {
     um array ItemsSold com informações do(s) produto(s)`, async () => {
       const response = await SalesService.create(payload);
 
-      expect(response).to.be.deep.equal(
-          {
-            id: 1,
-            itemsSold: [
-          {
-            "productId": 1,
-            "quantity": 3
-          }
-        ]
-      });
+      expect(response).to.be.deep.equal(obj);
     });
   });
 });
