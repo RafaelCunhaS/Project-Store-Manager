@@ -9,23 +9,6 @@ The API also has all of its __MSC__ layers covered with 100% of unit tests using
 
 ### How to run the project
 
-#### With Docker
-```bash
-
-    # Run the container in the background
-    $ docker-compose up -d
-
-    # Get access to a interactive terminal of the container made by the compose
-    $ docker exec -it store_manager bash
-
-    # Install the dependencies
-    $ npm install
-    
-    # Start the project
-    $ npm start
-```
-
-#### Without Docker
 ```bash
 
     # Clone the repository
