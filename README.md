@@ -20,6 +20,9 @@ The API also has all of its __MSC__ layers covered with 100% of unit tests using
 
     # Install the dependencies
     $ npm install
+    
+    # Start the project
+    $ npm start
 ```
 
 #### Without Docker
