@@ -1,6 +1,7 @@
 const SalesModel = require('../models/salesModel');
 const ProductsModel = require('../models/productsModel');
 const { NOT_FOUND, UNPROCESSABLE_ENTITY } = require('../utils/statusCode');
+const errorFunction = require('../utils/errorFunction');
 
 const getAll = async () => {
   const result = await SalesModel.getAll();
@@ -10,10 +11,7 @@ const getAll = async () => {
 const getById = async (id) => {
   const result = await SalesModel.getById(id);
 
-  if (!result.length) {
-    const error = { status: NOT_FOUND, message: 'Sale not found' };
-    throw error;
-  }
+  if (!result.length) throw errorFunction(NOT_FOUND, 'Sale not found');
 
   return result;
 };
@@ -27,8 +25,7 @@ const validateSale = async (array) => {
 
   array.forEach(({ quantity }, i) => {
     if (quantity > quantityAvailable[i]) {
-      const err = { status: UNPROCESSABLE_ENTITY, message: 'Such amount is not permitted to sell' };
-      throw err;
+      throw errorFunction(UNPROCESSABLE_ENTITY, 'Such amount is not permitted to sell');
     }
   });
 };
