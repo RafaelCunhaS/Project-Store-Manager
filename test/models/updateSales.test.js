@@ -7,16 +7,6 @@ const ProductsModel = require('../../models/productsModel');
 describe('Ao chamar a função update do model', () => {
   describe('Se houver determinada venda no BD', () => {
 
-    const SalePayload = {
-      "saleId": 1,
-      "itemUpdated": [
-        {
-          "productId": 1,
-          "quantity": 6
-        }
-      ]
-    };
-
     const getByIdPayload = [{
       id: 1,
       name: 'Armadura do Homem de Ferro',
@@ -45,10 +35,19 @@ describe('Ao chamar a função update do model', () => {
       expect(result).to.not.be.empty;
     });
 
-    it('o conteúdo do objeto contém os atributos date, productId, quantity', async () => {
+    it('o conteúdo do objeto contém os atributos date, productId, quantity e a estrutura correta', async () => {
+      const obj = {
+        "saleId": 1,
+        "itemUpdated": [
+          {
+            "productId": 1,
+            "quantity": 6
+          }
+        ]
+      };
       const result = await SalesModel.update(1, 1, 6);
 
-      expect(result).to.be.deep.equal(SalePayload);
+      expect(result).to.be.deep.equal(obj);
     })
   })
 })
