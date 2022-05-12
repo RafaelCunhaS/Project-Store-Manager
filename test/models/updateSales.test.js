@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../models/connection');
 const SalesModel = require('../../models/salesModel');
+const ProductsModel = require('../../models/productsModel');
 
 describe('Ao chamar a função update do model', () => {
   describe('Se houver determinada venda no BD', () => {
@@ -16,9 +17,21 @@ describe('Ao chamar a função update do model', () => {
       ]
     };
 
-    before(() => sinon.stub(connection, 'execute').resolves());
+    const getByIdPayload = [{
+      id: 1,
+      name: 'Armadura do Homem de Ferro',
+      quantity: 10
+    }]
 
-    after(() => connection.execute.restore());
+    before(() => {
+      sinon.stub(ProductsModel, 'getById').resolves(getByIdPayload);
+      sinon.stub(connection, 'execute').resolves();
+    });
+
+    after(() => {
+      ProductsModel.getById.restore();
+      connection.execute.restore();
+    });
 
     it('retorna um objeto', async () => {
       const result = await SalesModel.update(1, 1, 6);
