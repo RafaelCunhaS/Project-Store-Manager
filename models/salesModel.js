@@ -50,9 +50,7 @@ const create = async (array) => {
 };
 
 const update = async (id, productId, quantity) => {
-  const array = await getById(id);
-
-  const [previousQuantity] = array.filter((obj) => obj.productId === productId);
+  const [previousQuantity] = await ProductsModel.getById(productId);
 
   const newQuantity = quantity - previousQuantity.quantity;
 
