@@ -37,10 +37,10 @@ const update = async (id, name, quantity) => {
   });
 };
 
-const updateQuantity = async (array, boolean) => {
+const updateQuantity = async (array, isExclude) => {
   const response = array
     .map(({ productId, quantity }) => {
-      if (boolean) {
+      if (!isExclude) {
         return connection
           .execute('UPDATE products SET quantity = quantity-? WHERE id=?', [quantity, productId]);
       }

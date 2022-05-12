@@ -37,7 +37,7 @@ const createSalesProducts = async (id, array) => {
 };
 
 const create = async (array) => {
-  await ProductsModel.updateQuantity(array, true);
+  await ProductsModel.updateQuantity(array, false);
   
   const [{ insertId: id }] = await connection.execute('INSERT INTO sales (date) VALUES (NOW())');
   
@@ -50,6 +50,14 @@ const create = async (array) => {
 };
 
 const update = async (id, productId, quantity) => {
+  const array = await getById(id);
+
+  const [previousQuantity] = array.filter((obj) => obj.productId === productId);
+
+  const newQuantity = quantity - previousQuantity.quantity;
+
+  await ProductsModel.updateQuantity([{ productId, quantity: newQuantity }], false);
+
   await connection
     .execute('UPDATE sales_products SET quantity=? WHERE sale_id=? AND product_id=?',
     [quantity, id, productId]);
@@ -67,7 +75,7 @@ const update = async (id, productId, quantity) => {
 
 const exclude = async (id) => {
   const array = await getById(id);
-  await ProductsModel.updateQuantity(array, false);
+  await ProductsModel.updateQuantity(array, true);
   
   await connection.execute('DELETE FROM sales WHERE id=?', [id]);
 };
